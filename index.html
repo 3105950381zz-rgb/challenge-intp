@@ -121,27 +121,7 @@ const DATA={
   winDesc:'你通过了INTP的逻辑审查。不是因为你说得多好听，而是你的每一条论证都站得住脚。TA重新把你纳入了思考模型，这是最高规格的信任。'
 };
 
-const OPTIONS=[
-  '给TA一个有趣的新问题',
-  '理性分析你的问题出在哪',
-  '用情绪绑架TA',
-  '用新知识吸引TA的注意'
-];
-
-const STAGES=[
-  {scene:'TA对你说的话不再追问',line:'哦。',safe:2,death:'哦是大脑关闭对话的信号 你没信号了'},
-  {scene:'TA沉迷研究新领域不理会你',line:'很有意思。',safe:1,death:'你说点别的 TA说没兴趣'},
-  {scene:'你发现TA在默默修改你的逻辑漏洞',line:'你这里有问题。',safe:4,death:'你杠 TA说你逻辑不通 然后放弃你'},
-  {scene:'TA开始用概率描述你们的未来',line:'可能性不大。',safe:2,death:'你没反驳数据 TA给自己结论归档了'},
-  {scene:'TA不再跟你讨论任何有意义的话题',line:'随便吧。',safe:1,death:'随便是因为跟你讨论没有新东西'},
-  {scene:'你说情话TA像在分析标本',line:'这个假设不成立。',safe:2,death:'你的感情经不起验证 被驳回了'},
-  {scene:'TA书架上的书你一本都没看过',line:'你没看过？',safe:4,death:'你说没空 TA跟书过都比跟你快'},
-  {scene:'TA指出你说话的矛盾点',line:'你上次不是这么说的。',safe:2,death:'你前言不搭后语 TA失去交流欲'},
-  {scene:'TA说想一个人待着想东西',line:'别吵。',safe:2,death:'你吵了 TA切断所有输出通道'},
-  {scene:'TA问了一个你答不上的问题',line:'你不知道？',safe:4,death:'你说不重要 TA说你不重要的开始'},
-  {scene:'TA开始否定你们的关系模型',line:'这个架构有问题。',safe:1,death:'你说感觉 TA说不能靠感觉'},
-  {scene:'TA做了分析报告证明不应该继续',line:'基于以上原因。',safe:2,death:'你没数据反驳 结论生效 关系终结'}
-];
+const STAGES=[{scene:"TA对你说的话不再追问",line:"哦。",options:["你不好奇为什么吗","你是不是不在意我了","我问你一个问题考考你","你是不是对我不感兴趣了"],safe:2,death:"哦是大脑关闭对话的信号 你没信号了"},{scene:"TA沉迷研究新领域不理会你",line:"很有意思。",options:["什么有意思你教教我","你就知道研究你的东西","你理一下我好不好","这是什么领域我也看看"],safe:1,death:"你说点别的 TA说没兴趣"},{scene:"你发现TA在默默修改你的逻辑漏洞",line:"你这里有问题。",options:["你帮我改改","你总挑我毛病","你教我你会的","我没错你说的不对"],safe:4,death:"你杠 TA说你逻辑不通 然后放弃你"},{scene:"TA开始用概率描述你们的未来",line:"可能性不大。",options:["那怎么提高可能性","你就这么不看好我们","百分之几你说","我不信概率我相信我们"],safe:2,death:"你没反驳数据 TA给自己结论归档了"},{scene:"TA不再跟你讨论任何有意义的话题",line:"随便吧。",options:["你以前不是这样的","那我们聊聊没意义的话题","你是不是觉得我无聊了","那我们讨论这个"],safe:1,death:"随便是因为跟你讨论没有新东西"},{scene:"你说情话TA像在分析标本",line:"这个假设不成立。",options:["那你说怎么才成立","你非要这样说话吗","我爱你不需要假设","你能不能感性一次"],safe:2,death:"你的感情经不起验证 被驳回了"},{scene:"TA书架上的书你一本都没看过",line:"你没看过？",options:["你推荐一本给我我先看","没看过怎么了","那你讲给我听","我看别的书不行吗"],safe:4,death:"你说没空 TA跟书过都比跟你快"},{scene:"TA指出你说话的矛盾点",line:"你上次不是这么说的。",options:["我改主意了不行吗","你说得对我上次说错了","你还记得我说过的每句话","你这么严谨累不累"],safe:2,death:"你前言不搭后语 TA失去交流欲"},{scene:"TA说想一个人待着想东西",line:"别吵。",options:["我不吵你你想好了叫我","你就知道想懒得理我","你在想什么我想知道","你每次这样我都很不安"],safe:2,death:"你吵了 TA切断所有输出通道"},{scene:"TA问了一个你答不上的问题",line:"你不知道？",options:["我不知道你给我讲讲","我为什么要知道这个","我当然知道但我不同意","不知道但我想知道"],safe:4,death:"你说不重要 TA说你不重要的开始"},{scene:"TA开始否定你们的关系模型",line:"这个架构有问题。",options:["那你说怎么重构","你又来了能不能不分析","有问题我们修不是推翻","我感觉你说的是我不想承认的"],safe:1,death:"你说感觉 TA说不能靠感觉"},{scene:"TA做了分析报告证明不应该继续",line:"基于以上原因。",options:["你的原因我一条条反驳你","你开心就好","有没有考虑过感情变量","你的报告我不同意"],safe:2,death:"你没数据反驳 结论生效 关系终结"}];
 
 let cur=0,over=false;
 const A=document.getElementById('app');
@@ -176,7 +156,7 @@ function lv(){
   if(over)return'';
   if(cur>=STAGES.length)return end();
   const s=STAGES[cur];
-  const optsHtml=OPTIONS.map((o,i)=>`<button class="opt" onclick="pk(${i})"><span class="il s${i+1}">${LABELS[i]}</span>${o}</button>`).join('');
+  const optsHtml=s.options.map((o,i)=>`<button class="opt" onclick="pk(${i})"><span class="il s${i+1}">${LABELS[i]}</span>${o}</button>`).join('');
   return `<div class="card fi">
     <div class="lv-hd">
       <span class="lv-name">⚠️ 第${cur+1}/${STAGES.length}关</span>
