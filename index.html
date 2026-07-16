@@ -232,7 +232,7 @@ function end(){
       <div class="go-desc">${s.death}</div>
 <button class="btn btn-danger" onclick="go()">🔄 再试一次</button>
       <div style="height:6px"></div>
-      <button class="btn btn-primary" onclick="cap()">📸 保存结果分享</button>
+      <button class="btn btn-primary" onclick="cap()">📤 分享给好友</button>
 <div class="go-qr"><img src="${DATA.qrSrc}" alt="扫码"/></div>
       
       <div class="go-brand">灵客星球</div></div>`;
@@ -244,7 +244,7 @@ function end(){
     <div style="font-size:11px;color:rgba(240,236,228,.6);margin:2px 0 8px">你成功挽回了${DATA.title}的心</div>
     ${statsHTML(STAGES.length)}
     <div class="win-desc">${DATA.winDesc}</div>
-    <button class="btn btn-primary" onclick="cap()">📸 保存结果分享</button>
+    <button class="btn btn-primary" onclick="cap()">📤 分享给好友</button>
     <div style="height:6px"></div>
     <button class="btn btn-second" onclick="go()">🔄 再测一次</button>
     <div class="win-qr"><img src="${DATA.qrSrc}" alt="扫码"/></div>
@@ -271,18 +271,9 @@ function st(m){
 }
 
 function cap(){
-  var el=document.getElementById('capArea');
-  if(!el)return;
-  el.scrollIntoView({behavior:'smooth',block:'center'});
-  var old=document.getElementById('ssGuide');
-  if(old)old.remove();
-  var g=document.createElement('div');
-  g.id='ssGuide';
-  g.style.cssText='position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;pointer-events:none';
-  g.innerHTML='<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.85);color:#fff;padding:24px 32px;border-radius:16px;text-align:center;font-size:16px;letter-spacing:1px;line-height:1.8;border:2px dashed rgba(255,255,255,.3)">📱 截屏保存<br><span style="font-size:12px;opacity:.5">电源键+音量下键 或 截屏手势<br>然后发朋友圈</span></div>'
-    +'<div style="position:absolute;top:8px;left:8px;right:8px;bottom:8px;border:3px solid #feca57;border-radius:12px;box-shadow:0 0 0 9999px rgba(0,0,0,.3);pointer-events:none"></div>';
-  document.body.appendChild(g);
-  setTimeout(function(){g.remove()},5000);
+  if(navigator.share){
+    navigator.share({title:'挽回'+DATA.title+'挑战',text:'我正在挑战【挽回'+DATA.title+'】你能闯到第几关？来试试吧 👇',url:window.location.href}).catch(function(){});
+  }
 }
 
 hm();
