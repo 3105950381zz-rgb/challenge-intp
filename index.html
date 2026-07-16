@@ -127,7 +127,7 @@ const DATA={
   emoji:'🔬',title:'INTP',subtitle:'思维至上的探索者',
   desc:'INTP 活在自己的思维宇宙里。不是你不够好，是你的逻辑不够严密。TA不是不爱你，是你经不起推敲了。',
   color:'#818cf8',qrSrc:'qrcode.jpg',
-  winDesc:'你通过了INTP的逻辑审查。不是因为你说得多好听，而是你的每一条论证都站得住脚。TA重新把你纳入了思考模型，这是最高规格的信任。',difficulty:'★★★★☆',diffLabel:'逻辑型 · 别踩TA的思维雷区',dist:[100,78,62,46,32,22,14,8,5,2,1,0.4,0.1]};
+  winDesc:'你通过了INTP的逻辑审查。不是因为你说得多好听，而是你的每一条论证都站得住脚。TA重新把你纳入了思考模型，这是最高规格的信任。',difficulty:'★★★★☆',diffLabel:'逻辑型 · 别踩TA的思维雷区',dist:[100,95,89,81,71,60,48,37,26,17,10,5,1.5]};
 
 const STAGES=[{scene:"TA对你说的话不再追问",line:"哦。",options:["你是不是不想理我了","你以前不是什么都问我的吗","哦是什么意思你对我没兴趣了","我最近在想一个很有意思的问题你要不要听"],safe:4,death:"哦是大脑关闭对话的信号 你没信号了"},{scene:"TA沉迷研究新领域不理会你",line:"很有意思。",options:["什么领域这么有意思说来听听","你一天到晚就知道研究不理人了","你能不能把注意力放我身上再搞研究","你研究这个有什么用能当饭吃吗"],safe:1,death:"你说点别的 TA说没兴趣"},{scene:"你发现TA在默默修改你的逻辑漏洞",line:"你这里有问题。",options:["你能不能别老挑我毛病烦不烦","哪有问题你说说我自己想想","我没错是你想太多了","有问题你直接教我不行吗"],safe:2,death:"你杠 TA说你逻辑不通 然后放弃你"},{scene:"TA开始用概率描述你们的未来",line:"可能性不大。",options:["你能不能别这么悲观","你说不大就不大吗我不信","为什么不大你分析给我听听","那怎么做才能提高可能性"],safe:3,death:"你没反驳数据 TA给自己结论归档了"},{scene:"TA不再跟你讨论任何有意义的话题",line:"随便吧。",options:["我今天看到了一个很有意思的理论你听听","我们以前不是有很多话题可以聊的吗","你是不是觉得我配不上跟你聊了","你想敷衍我到什么时候"],safe:1,death:"随便是因为跟你讨论没有新东西"},{scene:"你说情话TA像在分析标本",line:"这个假设不成立。",options:["你能不能不分析就感受一下","那你证明一下哪里不成立我看看","爱不需要证明你需要重新学感情","你这个态度真的让人很难受"],safe:2,death:"你的感情经不起验证 被驳回了"},{scene:"TA书架上的书你一本都没看过",line:"你没看过？",options:["我为什么非要看过你那些书","没看过怎么了很奇怪吗","那你推荐一本最值得看的我马上看","我看别的书不行吗非要看你这些"],safe:3,death:"你说没空 TA跟书过都比跟你快"},{scene:"TA指出你说话的矛盾点",line:"你上次不是这么说的。",options:["人都会变的我说过的话不能变吗","你说得对我这次确实没想清楚","你就喜欢抓我话里的漏洞","你记性真好那你帮我理一下我错在哪了"],safe:4,death:"你前言不搭后语 TA失去交流欲"},{scene:"TA说想一个人待着想东西",line:"别吵。",options:["好我不吵你你想完了叫我","你能不能不要每次有问题就躲起来","你在想什么可以告诉我吗我帮你一起想","你每次这样我很不安你知不知道"],safe:1,death:"你吵了 TA切断所有输出通道"},{scene:"TA问了一个你答不上的问题",line:"你不知道？",options:["你问的问题好难我哪知道","我不知道但我想知道你给我讲讲","我为什么要知道这个你考我啊","我知道但我不同意你的观点"],safe:2,death:"你说不重要 TA说你不重要的开始"},{scene:"TA开始否定你们的关系模型",line:"这个架构有问题。",options:["你能不能不要什么都分析感情不是架构","你又来了整天分析累不累啊","那你觉得哪里有问题我听听你的分析","有问题你直说不要打比喻"],safe:3,death:"你说感觉 TA说不能靠感觉"},{scene:"TA做了分析报告证明不应该继续",line:"基于以上原因。",options:["你的原因我都不同意我们一条条过","你的分析我尊重但我也有我的论据","你分析了这么久有没有把自己放进去","我不同意因为你漏掉了一些重要变量"],safe:4,death:"你没数据反驳 结论生效 关系终结"}];
 
@@ -137,7 +137,7 @@ const LABELS=['A','B','C','D'];
 const SK='mbti_wb';
 function ls(){try{return JSON.parse(localStorage.getItem(SK))||{}}catch(e){return{}}}
 function sv(t,l,w){const a=ls();if(!a[t]||a[t].best<l){a[t]={best:l,won:w,date:Date.now()}}a[t].plays=(a[t].plays||0)+1;localStorage.setItem(SK,JSON.stringify(a))}
-function pct(l){const d=DATA.dist;return Math.round((d[Math.min(l,d.length-1)]||0)*10)/10}
+function pct(l){return Math.round((100-(d[Math.min(Math.max(l-1,0),d.length-1)]||0))*10)/10}
 function statsHTML(level){
   const p=pct(level);
   return '<div class="stats-box">'
