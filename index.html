@@ -271,23 +271,18 @@ function st(m){
 }
 
 function cap(){
-  if(typeof html2canvas==='undefined'){st('请手动截图');return}
   var el=document.getElementById('capArea');
   if(!el)return;
-  try{
-    var btns=el.querySelectorAll('button');
-    for(var i=0;i<btns.length;i++)btns[i].style.visibility='hidden';
-    html2canvas(el,{scale:2,useCORS:true,logging:false,backgroundColor:null,allowTaint:true}).then(function(c){
-      for(var i=0;i<btns.length;i++)btns[i].style.visibility='';
-      var u=c.toDataURL('image/png');
-      var o=document.createElement('div');
-      o.style.cssText='position:fixed;top:0;left:0;right:0;bottom:0;z-index:99999;background:#000;text-align:center;overflow-y:auto';
-      o.innerHTML='<div style="color:#fff;font-size:15px;padding:40px 20px 10px">👆 长按图片保存</div>'
-        +'<img src="'+u+'" style="max-width:100%;width:320px;display:inline-block">'
-        +'<div style="padding:20px"><button onclick="document.body.removeChild(this.parentNode.parentNode)" style="padding:10px 40px;border:1px solid rgba(255,255,255,.2);border-radius:8px;background:0 0;color:#fff;font-size:14px;font-family:inherit">✕ 关闭</button></div>';
-      document.body.appendChild(o);
-    }).catch(function(e){console.log(e);st('截图失败请手动截图')});
-  }catch(e){st('截图失败请手动截图')}
+  el.scrollIntoView({behavior:'smooth',block:'center'});
+  var old=document.getElementById('ssGuide');
+  if(old)old.remove();
+  var g=document.createElement('div');
+  g.id='ssGuide';
+  g.style.cssText='position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;pointer-events:none';
+  g.innerHTML='<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.85);color:#fff;padding:24px 32px;border-radius:16px;text-align:center;font-size:16px;letter-spacing:1px;line-height:1.8;border:2px dashed rgba(255,255,255,.3)">📱 截屏保存<br><span style="font-size:12px;opacity:.5">电源键+音量下键 或 截屏手势<br>然后发朋友圈</span></div>'
+    +'<div style="position:absolute;top:8px;left:8px;right:8px;bottom:8px;border:3px solid #feca57;border-radius:12px;box-shadow:0 0 0 9999px rgba(0,0,0,.3);pointer-events:none"></div>';
+  document.body.appendChild(g);
+  setTimeout(function(){g.remove()},5000);
 }
 
 hm();
